@@ -3,6 +3,13 @@ using System.Collections;
 
 public class Bullet : MonoBehaviour {
 
+	[HideInInspector]
+	public int damage;
+
+	void Awake(){
+		this.damage = 5;
+	}
+
 	// Use this for initialization
 	void Start () {
 	

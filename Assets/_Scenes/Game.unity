@@ -85,6 +85,34 @@ NavMeshSettings:
     cellSize: .166666672
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &22055687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 22055688}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &22055688
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 22055687}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.88521957, y: 3.99163508, z: .099609375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 625189139}
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
 --- !u!1 &78985642
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +162,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 78985642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.97729969, y: -.206905842, z: 0}
+  m_LocalPosition: {x: 5.48000002, y: -.206905842, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481519965}
@@ -250,6 +278,52 @@ Transform:
   - {fileID: 78985644}
   m_Father: {fileID: 354077400}
   m_RootOrder: 0
+--- !u!1001 &623856354
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 22055688}
+    m_Modifications:
+    - target: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 2.6099999
+      objectReference: {fileID: 0}
+    - target: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: .508364916
+      objectReference: {fileID: 0}
+    - target: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -.099609375
+      objectReference: {fileID: 0}
+    - target: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &625189139 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 458348, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+  m_PrefabInternal: {fileID: 623856354}
 --- !u!1 &1423024464
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +373,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1423024464}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.02270031, y: -.206905842, z: 0}
+  m_LocalPosition: {x: -7.51999998, y: -.206905842, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 481519965}
@@ -480,7 +554,7 @@ Transform:
   m_GameObject: {fileID: 1708889287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3, y: 4.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: .469587326, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -495,3 +569,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 236796920f5c5814daa51f9dffe4d6d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 189844, guid: 2f7af015f0745c341995fe3b8844e19d, type: 2}
