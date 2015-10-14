@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		print(HUDManager.pixelsToUnits(Screen.width));
+
 	}
 	
 	// Update is called once per frame
