@@ -6,7 +6,7 @@ public class HUDManager : MonoBehaviour {
 	private int world_units = 16;
 	public static float px_unit = 60;
 	public static float screen_units_height;
-	public static float limit_spacing_y = 0.75f;
+	public static float limit_spacing_y = 0.45f;
 
 	void Awake(){
 		px_unit = ((Screen.height / 2f) / Camera.main.orthographicSize);
