@@ -68,7 +68,12 @@ public class Player : MonoBehaviour {
 		bool shooting = false;
 		if(Input.touchCount > 0){
 			for(int i = 0; i < Input.touchCount; i++){
-				if(Input.GetTouch(i).position.x > Screen.width / 2){
+				if(
+					Input.GetTouch(i).position.x > Screen.width / 2 &&
+					Input.GetTouch(i).position.y > Screen.height / 4 &&
+					Input.GetTouch(i).position.y < (Screen.height / 4) * 3
+
+				){
 					shooting = true;
 				}
 			}

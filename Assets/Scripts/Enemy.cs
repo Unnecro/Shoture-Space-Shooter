@@ -16,7 +16,6 @@ private int i = 0;
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
-
 		Bullet bullet = collider.gameObject.GetComponent<Bullet>();
 
 		Color old_color = this.GetComponent<SpriteRenderer>().color;
@@ -26,8 +25,6 @@ private int i = 0;
 			old_color.b - (bullet.damage / 100f),
 			old_color.a
 		);
-
-		print(new_color);
 
 		this.GetComponent<SpriteRenderer>().color = new_color;
 
