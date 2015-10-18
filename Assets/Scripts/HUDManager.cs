@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class HUDManager : MonoBehaviour {
 
-	private int world_units = 16;
 	public static float px_unit = 60;
-	public static float screen_units_height;
+  public static float screen_units_height = 9f;
 	public static float screen_units_width = 16f;
 	public static float limit_spacing_y = 0.45f;
 

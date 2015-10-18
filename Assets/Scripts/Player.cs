@@ -1,111 +1,128 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	public GameObject bullet;
+  public GameObject bullet;
 
-	private float last_y;
-	private float current_y;
+  public GameObject shooting_area;
 
-	// Use this for initialization
-	void Start () {
- 		last_y = this.transform.position.y;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		current_y = this.transform.position.y;
+  public Sprite ship_up;
+  public Sprite ship_stable;
+  public Sprite ship_down;
 
-		handleMovement();
-		handleShooting();
-		handleSprites();
+  private float last_y;
+  private float current_y;
 
-		last_y = current_y;
-	}
+  private float accumulated_time = 0f;
+  private float last_time = 0f;
 
-	void handleSprites(){
-		if(last_y <= current_y){
-			this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 0f, 1f);
-		} else if(last_y > current_y){
-			this.GetComponent<SpriteRenderer>().color = new Color(0f, 1f, 1f, 1f);
-		} else {
+  private short ship_status = 0;
 
-		}
-	}
+  void OnDrawGizmos() {
+    Gizmos.DrawWireCube(this.transform.position, new Vector3(this.transform.localScale.x, this.transform.localScale.y));
+  }
 
-	void handleMovement(){
-		Vector3 player_pos = this.transform.position;
-		bool y_moving = false;
-		bool shooting = false;
-		float y_pos_px = 0;
+  // Use this for initialization
+  void Start() {
+    last_y = this.transform.position.y;
+    this.GetComponent<SpriteRenderer>().sprite = ship_stable;
+    
+  }
 
-		if(Input.touchCount > 0){
-			for(int i = 0; i < Input.touchCount; i++){
-				if(Input.GetTouch(i).position.x < Screen.width / 2){
-					y_moving = true;
-					y_pos_px = Input.GetTouch(i).position.y;
-				}
-			}
-		}
+  // Update is called once per frame
+  void Update() {
+    handleMovement();
+    current_y = this.transform.position.y;
+    handleShooting();
+    handleSprites();
 
-		if(y_moving){
-			float y_pos_units = y_pos_px / HUDManager.px_unit;
+    last_y = current_y;
+  }
 
-			if(
-				y_pos_units > this.transform.position.y &&
-				y_pos_units - this.transform.position.y > 0.5f
-			){
-				y_pos_units = +(this.transform.position.y + 30f) * Time.deltaTime;
-				y_pos_units += this.transform.position.y;
-			} else if(
-				y_pos_units < this.transform.position.y &&
-				this.transform.position.y - y_pos_units > 0.5f
-			){
-				y_pos_units = -(this.transform.position.y + 30f) * Time.deltaTime;
-				y_pos_units += this.transform.position.y;
-			}
+  void handleSprites() {
+    if (last_y < current_y && current_y - last_y > 0.1f) {
+      ship_status = 1;
+      this.GetComponent<SpriteRenderer>().sprite = ship_up;
 
-			float y_move = Mathf.Clamp(
-				y_pos_units,
-				HUDManager.limit_spacing_y,
-				HUDManager.screen_units_height - HUDManager.limit_spacing_y
-			);
+      accumulated_time = 0f;
+    } else if (last_y > current_y && current_y - last_y < -0.1f) {
+      ship_status = -1;
+      this.GetComponent<SpriteRenderer>().sprite = ship_down;
 
-			player_pos = new Vector3(
-				player_pos.x,
-				y_move,
-				player_pos.z
-			);
-		}
+      accumulated_time = 0f;
+    } else {
+      float time_elapsed = accumulated_time - last_time;
+      if (time_elapsed >= 0.2f || ship_status == 0) {
+        ship_status = 0;
+        this.GetComponent<SpriteRenderer>().sprite = ship_stable;
 
-		this.transform.position = player_pos;
-	}
+        last_time = Time.deltaTime;
+        accumulated_time = 0f;
+      } else {
+        accumulated_time += Time.deltaTime;
+      }
+    }
+  }
 
-	void handleShooting(){
-		bool shooting = false;
-		if(Input.touchCount > 0){
-			for(int i = 0; i < Input.touchCount; i++){
-				if(
-					Input.GetTouch(i).position.x > Screen.width / 2 &&
-					Input.GetTouch(i).position.y > Screen.height / 4 &&
-					Input.GetTouch(i).position.y < (Screen.height / 4) * 3
+  void handleMovement() {
+    Vector3 player_pos = this.transform.position;
+    bool y_moving = false;
+    float y_pos_px = 0;
 
-				){
-					shooting = true;
-				}
-			}
-		}
+    if (Input.touchCount > 0) {
+      for (int i = 0; i < Input.touchCount; i++) {
+        if (Input.GetTouch(i).position.x < Screen.width / 2) {
+          y_moving = true;
+          y_pos_px = Input.GetTouch(i).position.y;
+        }
+      }
+    }
 
-		if(shooting){
-			Vector3 bullet_pos = new Vector3(
-				this.transform.position.x + 1.3f,
-				this.transform.position.y,
-				this.transform.position.z
-			);
+    if (y_moving) {
+      float y_pos_units = y_pos_px / HUDManager.px_unit;
 
-			Instantiate(bullet, bullet_pos, Quaternion.identity);
-		}
-	}
+      if (
+        y_pos_units > this.transform.position.y &&
+        y_pos_units - this.transform.position.y > 0.5f
+      ) {
+        y_pos_units = +(this.transform.position.y + 30f) * Time.deltaTime;
+        y_pos_units += this.transform.position.y;
+      } else if (
+        y_pos_units < this.transform.position.y &&
+        this.transform.position.y - y_pos_units > 0.5f
+      ) {
+        y_pos_units = -(this.transform.position.y + 30f) * Time.deltaTime;
+        y_pos_units += this.transform.position.y;
+      }
+
+      float y_move = Mathf.Clamp(
+        y_pos_units,
+        HUDManager.limit_spacing_y,
+        HUDManager.screen_units_height - HUDManager.limit_spacing_y
+      );
+
+      player_pos = new Vector3(
+        player_pos.x,
+        y_move,
+        player_pos.z
+      );
+    }
+
+    this.transform.position = player_pos;
+  }
+
+  void handleShooting() {
+
+    if (ShootingArea.is_shooting) {
+      Vector3 bullet_pos = new Vector3(
+        this.transform.position.x + 1.3f,
+        this.transform.position.y,
+        this.transform.position.z
+      );
+
+      Instantiate(bullet, bullet_pos, Quaternion.identity);
+    }
+  }
 
 }

@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour {
 	private float velocity_x = 0f;
 	private float velocity_y = 0f;
 
-private int i = 0;
 	// Use this for initialization
 	void Start () {
 		this.transform.localScale = new Vector3(scale, scale, scale);
