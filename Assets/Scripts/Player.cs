@@ -5,15 +5,33 @@ public class Player : MonoBehaviour {
 
 	public GameObject bullet;
 
+	private float last_y;
+	private float current_y;
+
 	// Use this for initialization
 	void Start () {
- 
+ 		last_y = this.transform.position.y;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		current_y = this.transform.position.y;
+
 		handleMovement();
 		handleShooting();
+		handleSprites();
+
+		last_y = current_y;
+	}
+
+	void handleSprites(){
+		if(last_y <= current_y){
+			this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 0f, 1f);
+		} else if(last_y > current_y){
+			this.GetComponent<SpriteRenderer>().color = new Color(0f, 1f, 1f, 1f);
+		} else {
+
+		}
 	}
 
 	void handleMovement(){
