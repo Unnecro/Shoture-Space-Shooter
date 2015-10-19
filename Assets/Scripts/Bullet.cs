@@ -7,6 +7,9 @@ public class Bullet : MonoBehaviour {
 	public int damage;
 
   public float speed_y;
+  public float target_y;
+  public Vector3 player_pos;
+  private float recoil = 0.5f;
 
 	void Awake(){
 		this.damage = 5;
@@ -14,7 +17,9 @@ public class Bullet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-    speed_y = (speed_y - .5f) / 2;
+    target_y = player_pos.y - speed_y + Random.Range(-recoil, recoil);
+
+    speed_y = -target_y / (HUDManager.screen_units_width + player_pos.x + 1.5f);
   }
 	
 	// Update is called once per frame

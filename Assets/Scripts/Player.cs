@@ -79,7 +79,6 @@ public class Player : MonoBehaviour {
 
       this.transform.position = player_pos;
     }
-
   }
 
   void handleShooting() {
@@ -91,7 +90,10 @@ public class Player : MonoBehaviour {
         this.transform.position.z
       );
 
-      bullet.GetComponent<Bullet>().speed_y = shooting_area.getPosition().y;
+      Bullet bullet_script = bullet.GetComponent<Bullet>();
+      bullet_script.speed_y = shooting_area.getPosition().y;
+      bullet_script.player_pos = this.transform.position;
+
       Instantiate(bullet, bullet_pos, Quaternion.identity);
 
     }

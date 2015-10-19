@@ -26,7 +26,7 @@ PlayerSettings:
   m_MobileMTRendering: 0
   m_Stereoscopic3D: 0
   iosShowActivityIndicatorOnLoading: -1
-  androidShowActivityIndicatorOnLoading: 2
+  androidShowActivityIndicatorOnLoading: -1
   iosAppInBackgroundBehavior: 1
   displayResolutionDialog: 1
   iosAllowHTTPDownload: 1
@@ -165,18 +165,6 @@ PlayerSettings:
     m_Icons:
     - m_Icon: {fileID: 2800000, guid: c379656594f91445898d48eb96df3e0f, type: 3}
       m_Size: 128
-  - m_BuildTarget: Android
-    m_Icons:
-    - m_Icon: {fileID: 2800000, guid: c94506069dd2c484780fb8bbe4a4eb17, type: 3}
-      m_Size: 144
-    - m_Icon: {fileID: 2800000, guid: c815034ffc16f4a0e98e42b9304188bf, type: 3}
-      m_Size: 96
-    - m_Icon: {fileID: 2800000, guid: fdd4612c583e9480dac1f3782facd476, type: 3}
-      m_Size: 72
-    - m_Icon: {fileID: 2800000, guid: e6d951d4c4e37458f970b728b0e40808, type: 3}
-      m_Size: 48
-    - m_Icon: {fileID: 2800000, guid: 56c95f39c06654eae9f6f8c3c03943db, type: 3}
-      m_Size: 36
   - m_BuildTarget: iPhone
     m_Icons:
     - m_Icon: {fileID: 2800000, guid: cb5a31c1dac864b5f90811c410e7e572, type: 3}
