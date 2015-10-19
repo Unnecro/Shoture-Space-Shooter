@@ -5,7 +5,8 @@ public class Player : MonoBehaviour {
 
   public GameObject bullet;
 
-  public GameObject shooting_area;
+  public ShootingArea shooting_area;
+  public MovementArea movement_area;
 
   public Sprite ship_up;
   public Sprite ship_stable;
@@ -67,8 +68,8 @@ public class Player : MonoBehaviour {
   void handleMovement() {
     Vector3 player_pos = this.transform.position;
 
-    if (MovementArea.is_moving) {
-      float y_pos_units = MovementArea.getPosition(this.transform.position);
+    if (movement_area.isInteracting()) {
+      float y_pos_units = movement_area.getPosition(player_pos).y;
 
       player_pos = new Vector3(
         player_pos.x,
@@ -83,15 +84,16 @@ public class Player : MonoBehaviour {
 
   void handleShooting() {
 
-    if (ShootingArea.is_shooting) {
-
+    if (shooting_area.isInteracting()) {
       Vector3 bullet_pos = new Vector3(
         this.transform.position.x + 1.3f,
         this.transform.position.y,
         this.transform.position.z
       );
 
+      bullet.GetComponent<Bullet>().speed_y = shooting_area.getPosition().y;
       Instantiate(bullet, bullet_pos, Quaternion.identity);
+
     }
   }
 

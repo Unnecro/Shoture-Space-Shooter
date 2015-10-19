@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour {
 	[HideInInspector]
 	public int damage;
 
-  private float speed_y;
+  public float speed_y;
 
 	void Awake(){
 		this.damage = 5;
@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-    speed_y = (ShootingArea.getPosition() - .5f) / 2;
+    speed_y = (speed_y - .5f) / 2;
   }
 	
 	// Update is called once per frame
