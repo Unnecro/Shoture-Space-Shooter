@@ -9,6 +9,9 @@ public class HUDManager : MonoBehaviour {
 	public static float limit_spacing_y = 0.6f;
 
 	void Awake(){
+
+    Application.targetFrameRate = 60;
+
 		px_unit = ((Screen.height / 2f) / Camera.main.orthographicSize);
 
 		screen_units_height = HUDManager.pixelsToUnits(Screen.height);

@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour {
   private float recoil = 0.5f;
 
 	void Awake(){
-		this.damage = 5;
+		this.damage = 25;
 	}
 
 	// Use this for initialization

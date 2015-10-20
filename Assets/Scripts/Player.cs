@@ -20,6 +20,9 @@ public class Player : MonoBehaviour {
 
   private short ship_status = 0;
 
+  private float fire_delay = 0.08f; //Per second
+  private float fire_delay_tmp;
+
   void OnDrawGizmos() {
     Gizmos.DrawWireCube(this.transform.position, new Vector3(this.transform.localScale.x, this.transform.localScale.y));
   }
@@ -28,6 +31,8 @@ public class Player : MonoBehaviour {
   void Start() {
     last_y = this.transform.position.y;
     this.GetComponent<SpriteRenderer>().sprite = ship_stable;
+
+    fire_delay_tmp = fire_delay;
   }
 
   // Update is called once per frame
@@ -83,20 +88,29 @@ public class Player : MonoBehaviour {
 
   void handleShooting() {
 
-    if (shooting_area.isInteracting()) {
-      Vector3 bullet_pos = new Vector3(
-        this.transform.position.x + 1.3f,
-        this.transform.position.y,
-        this.transform.position.z
-      );
+    if (fire_delay_tmp >= fire_delay) {
+      if (shooting_area.isInteracting()) {
+        Vector3 bullet_pos = new Vector3(
+          this.transform.position.x + 1.3f,
+          this.transform.position.y,
+          this.transform.position.z
+        );
 
-      Bullet bullet_script = bullet.GetComponent<Bullet>();
-      bullet_script.speed_y = shooting_area.getPosition().y;
-      bullet_script.player_pos = this.transform.position;
+        Bullet bullet_script = bullet.GetComponent<Bullet>();
+        bullet_script.speed_y = shooting_area.getPosition().y;
+        bullet_script.player_pos = this.transform.position;
 
-      Instantiate(bullet, bullet_pos, Quaternion.identity);
+        Instantiate(bullet, bullet_pos, Quaternion.identity);
 
+        fire_delay_tmp = 0;
+      }
     }
+
+    if (fire_delay_tmp < fire_delay) {
+      fire_delay_tmp += Time.deltaTime;
+    }
+    
+    
   }
 
 }
