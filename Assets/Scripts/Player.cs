@@ -23,6 +23,12 @@ public class Player : MonoBehaviour {
   private float fire_delay = 0.08f; //Per second
   private float fire_delay_tmp;
 
+  private bool is_shooting = false;
+
+  private float original_x_pos;
+
+  private float recoil = 0.2f;
+
   void OnDrawGizmos() {
     Gizmos.DrawWireCube(this.transform.position, new Vector3(this.transform.localScale.x, this.transform.localScale.y));
   }
@@ -32,6 +38,7 @@ public class Player : MonoBehaviour {
     last_y = this.transform.position.y;
     this.GetComponent<SpriteRenderer>().sprite = ship_stable;
 
+    original_x_pos = this.transform.position.x;
     fire_delay_tmp = fire_delay;
   }
 
@@ -71,7 +78,15 @@ public class Player : MonoBehaviour {
   }
 
   void handleMovement() {
-    Vector3 player_pos = this.transform.position;
+    Vector3 player_pos = new Vector3(
+      original_x_pos,
+      this.transform.position.y,
+      this.transform.position.z  
+    );
+
+    if (is_shooting) {
+      player_pos -= new Vector3(recoil, 0f);
+    }
 
     if (movement_area.isInteracting()) {
       float y_pos_units = movement_area.getPosition(player_pos).y;
@@ -82,14 +97,16 @@ public class Player : MonoBehaviour {
         player_pos.z
       );
 
-      this.transform.position = player_pos;
     }
+
+    this.transform.position = player_pos;
   }
 
   void handleShooting() {
 
-    if (fire_delay_tmp >= fire_delay) {
-      if (shooting_area.isInteracting()) {
+    if (shooting_area.isInteracting()) {
+      is_shooting = true;
+      if (fire_delay_tmp >= fire_delay) {
         Vector3 bullet_pos = new Vector3(
           this.transform.position.x + 1.3f,
           this.transform.position.y,
@@ -103,13 +120,13 @@ public class Player : MonoBehaviour {
         Instantiate(bullet, bullet_pos, Quaternion.identity);
 
         fire_delay_tmp = 0;
+      } else {
+        fire_delay_tmp += Time.deltaTime;
       }
-    }
-
-    if (fire_delay_tmp < fire_delay) {
+    } else {
+      is_shooting = false;
       fire_delay_tmp += Time.deltaTime;
     }
-    
     
   }
 

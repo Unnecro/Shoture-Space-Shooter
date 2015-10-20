@@ -30,10 +30,10 @@ public abstract class InteractiveArea : MonoBehaviour {
   void Start() {
 
     sprite_pos_x = this.transform.position.x;
-    sprite_size_x = this.GetComponent<SpriteRenderer>().bounds.size.x;
+    sprite_size_x = this.transform.localScale.x;
 
     sprite_pos_y = this.transform.position.y;
-    sprite_size_y = this.GetComponent<SpriteRenderer>().bounds.size.y;
+    sprite_size_y = this.transform.localScale.y;
 
     area_min_x = sprite_pos_x - (sprite_size_x / 2);
     area_max_x = sprite_pos_x + (sprite_size_x / 2);

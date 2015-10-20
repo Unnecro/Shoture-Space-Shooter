@@ -36,6 +36,8 @@ public class Bullet : MonoBehaviour {
 				30f * Time.deltaTime,
 				speed_y
 			);
+
+      this.transform.Rotate(new Vector3(0f, 0f, speed_y * 5));
 		}
 	}
 }
