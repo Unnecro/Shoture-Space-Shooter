@@ -83,10 +83,10 @@ TrailRenderer:
       rgba: 1409336063
     m_Color[3]:
       serializedVersion: 2
-      rgba: 822147327
+      rgba: 63743
     m_Color[4]:
       serializedVersion: 2
-      rgba: 206569469
+      rgba: 5242877
   m_MinVertexDistance: 1
   m_Autodestruct: 1
 --- !u!114 &11479692
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  speed_y: 6.69996929
+  speed_y: 4.59996986
   target_y: 0
   player_pos: {x: 2.30000019, y: 4.5, z: 0}
 --- !u!212 &21258446
@@ -183,11 +183,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Colors.m_Color[3].rgba
-      value: 822147327
+      value: 63743
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Colors.m_Color[4].rgba
-      value: 206569469
+      value: 5242877
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
