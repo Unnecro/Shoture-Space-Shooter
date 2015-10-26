@@ -170,7 +170,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f335ac631392f9f44a2679aa7d2fa035, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: .00689649582, a: 1}
 --- !u!1 &66747676
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: .0344827175, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -499,7 +499,7 @@ Transform:
   m_GameObject: {fileID: 469411957}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.63000011, y: -4.20716858, z: 10}
-  m_LocalScale: {x: 1.01250005, y: 1, z: 1}
+  m_LocalScale: {x: 1.01250005, y: 1.01073802, z: 1}
   m_Children: []
   m_Father: {fileID: 1101918510}
   m_RootOrder: 2
@@ -1240,6 +1240,7 @@ GameObject:
   - 224: {fileID: 1590101047}
   - 114: {fileID: 1590101049}
   - 222: {fileID: 1590101048}
+  - 114: {fileID: 1590101050}
   m_Layer: 0
   m_Name: bars_energy (1)
   m_TagString: Untagged
@@ -1297,6 +1298,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &1590101050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1590101046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1507514e1643e4f4781093e25dd90347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1598258380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,7 +1436,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: ae13fbbe85e88e84eb8b5594572af2ba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d8ada28e1ee5b7e4f978e349c38efb20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &1708889289
 Transform:
@@ -1433,8 +1445,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1708889287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.13905048, y: .292831421, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -6.86000013, y: .550000012, z: 0}
+  m_LocalScale: {x: .699999988, y: .699999988, z: 0}
   m_Children: []
   m_Father: {fileID: 1101918510}
   m_RootOrder: 1
@@ -1452,9 +1464,9 @@ MonoBehaviour:
   bullet: {fileID: 189844, guid: 2f7af015f0745c341995fe3b8844e19d, type: 2}
   shooting_area: {fileID: 873473977}
   movement_area: {fileID: 316849059}
-  ship_up: {fileID: 21300000, guid: 0c29d7b503a666a4689454f465707c7b, type: 3}
-  ship_stable: {fileID: 21300000, guid: ae13fbbe85e88e84eb8b5594572af2ba, type: 3}
-  ship_down: {fileID: 21300000, guid: 55af46da30f658c408065056741e2f3a, type: 3}
+  ship_up: {fileID: 21300000, guid: fb2d4523e1a5ab1428ed2c9d6d3ea409, type: 3}
+  ship_stable: {fileID: 21300000, guid: d8ada28e1ee5b7e4f978e349c38efb20, type: 3}
+  ship_down: {fileID: 21300000, guid: fb2d4523e1a5ab1428ed2c9d6d3ea409, type: 3}
 --- !u!1001 &1716988772
 Prefab:
   m_ObjectHideFlags: 0

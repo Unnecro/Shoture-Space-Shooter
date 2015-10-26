@@ -65,7 +65,7 @@ public class Player : MonoBehaviour {
       accumulated_time = 0f;
     } else {
       float time_elapsed = accumulated_time - last_time;
-      if (time_elapsed >= 0.2f || ship_status == 0) {
+      if (time_elapsed >= 0.05f || ship_status == 0) {
         ship_status = 0;
         this.GetComponent<SpriteRenderer>().sprite = ship_stable;
 
