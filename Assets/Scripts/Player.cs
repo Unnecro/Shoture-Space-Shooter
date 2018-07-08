@@ -8,10 +8,6 @@ public class Player : MonoBehaviour {
   public ShootingArea shooting_area;
   public MovementArea movement_area;
 
-  public Sprite ship_up;
-  public Sprite ship_stable;
-  public Sprite ship_down;
-
   private float last_y;
   private float current_y;
 
@@ -27,7 +23,7 @@ public class Player : MonoBehaviour {
 
   private float original_x_pos;
 
-  private float recoil = 0.2f;
+  private float recoil = 0f;
 
   void OnDrawGizmos() {
     Gizmos.DrawWireCube(this.transform.position, new Vector3(this.transform.localScale.x, this.transform.localScale.y));
@@ -36,7 +32,6 @@ public class Player : MonoBehaviour {
   // Use this for initialization
   void Start() {
     last_y = this.transform.position.y;
-    this.GetComponent<SpriteRenderer>().sprite = ship_stable;
 
     original_x_pos = this.transform.position.x;
     fire_delay_tmp = fire_delay;
@@ -55,19 +50,19 @@ public class Player : MonoBehaviour {
   void handleSprites() {
     if (last_y < current_y && current_y - last_y > 0.1f) {
       ship_status = 1;
-      this.GetComponent<SpriteRenderer>().sprite = ship_up;
+      // TODO rotate ship up
 
       accumulated_time = 0f;
     } else if (last_y > current_y && current_y - last_y < -0.1f) {
       ship_status = -1;
-      this.GetComponent<SpriteRenderer>().sprite = ship_down;
+      // TODO rotate ship down
 
       accumulated_time = 0f;
     } else {
       float time_elapsed = accumulated_time - last_time;
       if (time_elapsed >= 0.05f || ship_status == 0) {
         ship_status = 0;
-        this.GetComponent<SpriteRenderer>().sprite = ship_stable;
+        // TODO set ship rotation horizontal
 
         last_time = Time.deltaTime;
         accumulated_time = 0f;
@@ -107,9 +102,15 @@ public class Player : MonoBehaviour {
     if (shooting_area.isInteracting()) {
       is_shooting = true;
       if (fire_delay_tmp >= fire_delay) {
-        Vector3 bullet_pos = new Vector3(
-          this.transform.position.x + 1.3f,
-          this.transform.position.y,
+        Vector3 bullet_pos_up = new Vector3(
+          this.transform.position.x + 1f,
+          this.transform.position.y - 0.5f,
+          this.transform.position.z
+        );
+
+        Vector3 bullet_pos_down = new Vector3(
+          this.transform.position.x + 1f,
+          this.transform.position.y + 0.5f,
           this.transform.position.z
         );
 
@@ -117,7 +118,8 @@ public class Player : MonoBehaviour {
         bullet_script.speed_y = shooting_area.getPosition().y;
         bullet_script.player_pos = this.transform.position;
 
-        Instantiate(bullet, bullet_pos, Quaternion.identity);
+        Instantiate(bullet, bullet_pos_up, Quaternion.identity);
+        Instantiate(bullet, bullet_pos_down, Quaternion.identity);
 
         fire_delay_tmp = 0;
       } else {

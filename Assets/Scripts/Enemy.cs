@@ -14,6 +14,12 @@ public class Enemy : MonoBehaviour {
   private float velocity_x = 0f;
 	private float velocity_y = 0f;
 
+	private Vector3 initialPosition;
+	private Vector3 initialScale;
+	private Quaternion initialRotation;
+
+	private GameObject originalGameObject;
+
 	// Use this for initialization
 	void Start () {
 
@@ -25,6 +31,14 @@ public class Enemy : MonoBehaviour {
 		
 		velocity_x = Random.Range(min_velocity, max_velocity);
 		velocity_y = Random.Range(min_velocity, max_velocity);
+
+		this.originalGameObject = this.gameObject;
+
+		Debug.Log(this.gameObject.transform.position.x);
+
+		this.initialPosition = this.gameObject.transform.position;
+		this.initialScale    = this.gameObject.transform.localScale;
+		this.initialRotation = this.gameObject.transform.rotation;
   }
 
   // Update is called once per frame
@@ -36,11 +50,12 @@ public class Enemy : MonoBehaviour {
       float scale_y = original_scale.y / original_scale.x * scale;
       this.transform.localScale += new Vector3(0f, scale_y);
     }
+
+		// Move object
     if (
 			this.transform.position.x <= 8 ||
 			this.transform.position.x >= 13.75f
 		){
-		
 			velocity_x = -velocity_x;
 		}
 
@@ -75,23 +90,13 @@ public class Enemy : MonoBehaviour {
 			this.health -= bullet.damage;
 
 			if(this.health <= 0){
-				Instantiate(
-					this.gameObject,
-					new Vector3(
-						this.transform.position.x,
-						this.transform.position.y,
-						this.transform.position.z
-					),
-					Quaternion.identity
-				);
+				Instantiate(this.originalGameObject, this.initialPosition, this.initialRotation);
 
 
 				Destroy(gameObject);
-
 			}
 
 			Destroy(collider.gameObject);
-
 		}
 	}
 }
