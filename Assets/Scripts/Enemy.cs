@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 
+	public EnemyArea enemyArea;
+
   private int max_health = 100;
 	private int health;
   private Vector3 original_scale;
@@ -11,6 +13,8 @@ public class Enemy : MonoBehaviour {
   private float min_velocity = 1f;
   private float max_velocity = 3f;
   
+	private int moveDelay = 0;
+	private int[] moveDirection;
   private float velocity_x = 0f;
 	private float velocity_y = 0f;
 
@@ -19,6 +23,8 @@ public class Enemy : MonoBehaviour {
 	private Quaternion initialRotation;
 
 	private GameObject originalGameObject;
+
+	private enum directions { idle = 0, up, right, down, left };
 
 	// Use this for initialization
 	void Start () {
@@ -52,27 +58,53 @@ public class Enemy : MonoBehaviour {
     }
 
 		// Move object
-    if (
-			this.transform.position.x <= 8 ||
-			this.transform.position.x >= 13.75f
-		){
-			velocity_x = -velocity_x;
+		this.move();
+	}
+
+	void move() {
+
+		if(this.moveDelay <= 0) {
+			this.moveDirection = this.chooseMoveDirection();
+
+			for(int i = 0; i < this.moveDirection.Length; i++) {
+				switch(this.moveDirection[i]) {
+					case (int) Enemy.directions.idle:
+						if(i == 0) {
+							velocity_x = 0;
+							velocity_y = 0;
+						}
+					break;
+					case (int) Enemy.directions.up:
+						velocity_y = -Random.Range(min_velocity, max_velocity);
+					break;
+					case (int) Enemy.directions.right:
+						velocity_x = Random.Range(min_velocity, max_velocity);
+					break;
+					case (int) Enemy.directions.down:
+						velocity_y = Random.Range(min_velocity, max_velocity);
+					break;
+					case (int) Enemy.directions.left:
+						velocity_x = -Random.Range(min_velocity, max_velocity);
+					break;
+				}
+			}
+
+			this.moveDelay = 100;
+		} else {
+			this.moveDelay--;
 		}
 
-		if(
-			this.transform.position.y <= 0.5 ||
-			this.transform.position.y >= 8.5
-		){
-			velocity_y = -velocity_y;
-		}
-
-		this.transform.position += new Vector3(
+		Vector3 nextPositionTmp = this.transform.position += new Vector3(
       velocity_x * Time.deltaTime,
       velocity_y * Time.deltaTime
     );
-		
+
+		this.transform.position = enemyArea.getPosition(nextPositionTmp);
 	}
 
+	int[] chooseMoveDirection() {		
+		return new int[] { Random.Range(0, 4), Random.Range(0, 4) };;
+	}
 	void OnTriggerEnter2D(Collider2D collider){
 		if(collider.gameObject.tag == "Bullet"){
 			Bullet bullet = collider.gameObject.GetComponent<Bullet>();

@@ -701,6 +701,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.00001
       objectReference: {fileID: 0}
+    - target: {fileID: 11493122, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
+      propertyPath: enemyArea
+      value: 
+      objectReference: {fileID: 1864946365}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d422fea85c4b9f24b89c00f00a68e4a6, type: 2}
   m_IsPrefabParent: 0
@@ -1082,7 +1086,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1952699983}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1588,6 +1592,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1864946363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1864946364}
+  - component: {fileID: 1864946365}
+  m_Layer: 5
+  m_Name: Enemy Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1864946364
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1864946363}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 78, y: 0, z: 0}
+  m_LocalScale: {x: 10.4, y: 9, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1952699983}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1864946365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1864946363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb1b0b287c1d594cace0752c43022f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1928156316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,6 +1861,7 @@ RectTransform:
   - {fileID: 1928156320}
   - {fileID: 316849058}
   - {fileID: 873473976}
+  - {fileID: 1864946364}
   - {fileID: 1272279690}
   - {fileID: 2111570166}
   m_Father: {fileID: 1101918510}
@@ -1913,7 +1958,7 @@ RectTransform:
   m_Children:
   - {fileID: 1938675274}
   m_Father: {fileID: 1952699983}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
