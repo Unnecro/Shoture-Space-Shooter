@@ -7,11 +7,11 @@ public class Enemy : MonoBehaviour {
 
   private int max_health = 100;
 	private int health;
-  private Vector3 original_scale;
-	private float scale = 0.01f;
+  // private Vector3 original_scale;
+	// private float scale = 0.01f;
 
-  private float min_velocity = 1f;
-  private float max_velocity = 3f;
+  private float min_velocity = 0.1f;
+  private float max_velocity = 0.3f;
   
 	private int moveDelay = 0;
 	private int[] moveDirection;
@@ -26,21 +26,23 @@ public class Enemy : MonoBehaviour {
 
 	private enum directions { idle = 0, up, right, down, left };
 
+	void OnDrawGizmos() {
+    Gizmos.DrawWireCube(this.transform.position, new Vector3(this.transform.localScale.x, this.transform.localScale.y));
+  }
+
 	// Use this for initialization
 	void Start () {
 
     health = max_health;
 
-    original_scale = this.transform.localScale;
-		this.transform.localScale = new Vector3(scale, scale, scale);
+    // original_scale = this.transform.localScale;
+		// this.transform.localScale = new Vector3(scale, scale, scale);
 		this.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
 		
 		velocity_x = Random.Range(min_velocity, max_velocity);
 		velocity_y = Random.Range(min_velocity, max_velocity);
 
 		this.originalGameObject = this.gameObject;
-
-		Debug.Log(this.gameObject.transform.position.x);
 
 		this.initialPosition = this.gameObject.transform.position;
 		this.initialScale    = this.gameObject.transform.localScale;
@@ -49,13 +51,13 @@ public class Enemy : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-    if (this.transform.localScale.x < original_scale.x) {
-      this.transform.localScale += new Vector3(scale, 0f);
-    }
-    if (this.transform.localScale.y < original_scale.y) {
-      float scale_y = original_scale.y / original_scale.x * scale;
-      this.transform.localScale += new Vector3(0f, scale_y);
-    }
+    // if (this.transform.localScale.x < original_scale.x) {
+    //   this.transform.localScale += new Vector3(scale, 0f);
+    // }
+    // if (this.transform.localScale.y < original_scale.y) {
+    //   float scale_y = original_scale.y / original_scale.x * scale;
+    //   this.transform.localScale += new Vector3(0f, scale_y);
+    // }
 
 		// Move object
 		this.move();
@@ -94,12 +96,12 @@ public class Enemy : MonoBehaviour {
 			this.moveDelay--;
 		}
 
-		Vector3 nextPositionTmp = this.transform.position += new Vector3(
+		Vector3 unFixedPosition = this.transform.localPosition + new Vector3(
       velocity_x * Time.deltaTime,
       velocity_y * Time.deltaTime
     );
 
-		this.transform.position = enemyArea.getPosition(nextPositionTmp);
+		this.transform.localPosition = enemyArea.fixPosition(unFixedPosition, this.gameObject.transform.localScale);
 	}
 
 	int[] chooseMoveDirection() {		

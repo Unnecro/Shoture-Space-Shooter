@@ -43,8 +43,10 @@ public abstract class InteractiveArea : MonoBehaviour {
   }
 
   public bool isInteracting() {
+    Debug.Log(Input.touchCount);
     bool is_interacting = false;
     if (Input.touchCount > 0) {
+      
       for (int i = 0; i < Input.touchCount; i++) {
         input_units_pos_x = Input.GetTouch(i).position.x * HUDManager.screen_units_width / Screen.width;
         input_units_pos_y = Input.GetTouch(i).position.y * HUDManager.screen_units_height / Screen.height;

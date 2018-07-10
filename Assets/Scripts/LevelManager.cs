@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
 	public void restartLevel(){
-		Application.LoadLevel(Application.loadedLevel);
+		SceneManager.LoadScene("Game");
 	}
 
 	public void QuitGame(){
 		Application.Quit();
 	}
-
+	
 }
