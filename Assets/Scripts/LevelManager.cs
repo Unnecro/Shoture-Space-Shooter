@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour {
 
 	public void restartLevel(){
+		Debug.Log("test");
 		SceneManager.LoadScene("Game");
 	}
 

@@ -5,13 +5,13 @@ public class Enemy : MonoBehaviour {
 
 	public EnemyArea enemyArea;
 
-  private int max_health = 100;
+  private int max_health = 1000;
 	private int health;
   // private Vector3 original_scale;
 	// private float scale = 0.01f;
 
-  private float min_velocity = 0.1f;
-  private float max_velocity = 0.3f;
+  private float min_velocity = 1f;
+  private float max_velocity = 3f;
   
 	private int moveDelay = 0;
 	private int[] moveDirection;
@@ -69,6 +69,8 @@ public class Enemy : MonoBehaviour {
 			this.moveDirection = this.chooseMoveDirection();
 
 			for(int i = 0; i < this.moveDirection.Length; i++) {
+				// this.moveDirection[i] = (int) Enemy.directions.left;
+				Debug.Log(this.moveDirection[i]);
 				switch(this.moveDirection[i]) {
 					case (int) Enemy.directions.idle:
 						if(i == 0) {
@@ -101,21 +103,24 @@ public class Enemy : MonoBehaviour {
       velocity_y * Time.deltaTime
     );
 
-		this.transform.localPosition = enemyArea.fixPosition(unFixedPosition, this.gameObject.transform.localScale);
+		Vector3 fixedPosition = enemyArea.fixPosition(unFixedPosition, this.gameObject.GetComponent<Collider2D>().transform.localScale);
+
+		this.transform.localPosition = fixedPosition;
 	}
 
 	int[] chooseMoveDirection() {		
-		return new int[] { Random.Range(0, 4), Random.Range(0, 4) };;
+		return new int[] { Random.Range(0, 5), Random.Range(0, 5) };
 	}
 	void OnTriggerEnter2D(Collider2D collider){
 		if(collider.gameObject.tag == "Bullet"){
 			Bullet bullet = collider.gameObject.GetComponent<Bullet>();
 
 			Color old_color = this.GetComponent<SpriteRenderer>().color;
+			Debug.Log(old_color);
 			Color new_color = new Color(
 				old_color.r,
-				old_color.g - (this.max_health / bullet.damage) * 0.1f,
-				old_color.b - (this.max_health / bullet.damage) * 0.1f,
+				old_color.g - (this.max_health / bullet.damage) * 0.01f,
+				// old_color.b - (this.max_health / bullet.damage) * 0.1f,
         old_color.a
 			);
 
