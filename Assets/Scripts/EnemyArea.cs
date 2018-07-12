@@ -19,17 +19,17 @@ public class EnemyArea : MonoBehaviour {
 	void OnDrawGizmos() {
     Gizmos.DrawWireCube(this.transform.position, new Vector3(this.transform.localScale.x, this.transform.localScale.y));
   }
-  public Vector3 fixPosition(Vector3 enemyPosition, Vector3 enemyScale) {
+  public Vector3 fixPosition(Vector3 enemyPosition, Vector3 enemyColliderScale) {
     float moveX = Mathf.Clamp(
       enemyPosition.x,
-      this.boundMinX + enemyScale.x / 2,
-      this.boundMaxX - enemyScale.x / 2
+      this.boundMinX + enemyColliderScale.x / 2,
+      this.boundMaxX - enemyColliderScale.x / 2
     );
 
     float moveY = Mathf.Clamp(
       enemyPosition.y,
-      this.boundMinY + enemyScale.y / 2,
-      this.boundMaxY - enemyScale.y / 2
+      this.boundMinY + enemyColliderScale.y / 2,
+      this.boundMaxY - enemyColliderScale.y / 2
     );
 
     return new Vector3(
