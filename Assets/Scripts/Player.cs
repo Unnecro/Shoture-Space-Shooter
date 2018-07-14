@@ -5,7 +5,11 @@ public class Player : MonoBehaviour {
 
   public GameObject bullet;
 
-  public ShootingArea shooting_area;
+  private int maxHealth = 1000;
+
+  private int currentHealth;
+
+  public ShootingArea shootingArea;
   public MovementArea movement_area;
 
   private float last_y;
@@ -25,6 +29,8 @@ public class Player : MonoBehaviour {
 
   private float recoil = 0f;
 
+  private float shotSpeed = 30f;
+
   void OnDrawGizmos() {
     Gizmos.DrawWireCube(this.transform.position, new Vector3(this.transform.localScale.x, this.transform.localScale.y));
   }
@@ -35,6 +41,8 @@ public class Player : MonoBehaviour {
 
     original_x_pos = this.transform.position.x;
     fire_delay_tmp = fire_delay;
+
+    this.currentHealth = this.maxHealth;
   }
 
   // Update is called once per frame
@@ -44,7 +52,16 @@ public class Player : MonoBehaviour {
     handleShooting();
     handleSprites();
 
+    checkColor();
+
     last_y = current_y;
+
+    if(this.currentHealth <= 0) {
+      Debug.Log("Dead!");
+
+      // TODO Go to menu scene
+      this.currentHealth = this.maxHealth;
+    }
   }
 
   void handleSprites() {
@@ -99,7 +116,7 @@ public class Player : MonoBehaviour {
 
   void handleShooting() {
 
-    if (shooting_area.isInteracting()) {
+    if (shootingArea.isInteracting()) {
       is_shooting = true;
       if (fire_delay_tmp >= fire_delay) {
         Vector3 bullet_pos_up = new Vector3(
@@ -114,9 +131,11 @@ public class Player : MonoBehaviour {
           this.transform.position.z
         );
 
-        Bullet bullet_script = bullet.GetComponent<Bullet>();
-        bullet_script.speed_y = shooting_area.getPosition().y;
-        bullet_script.player_pos = this.transform.position;
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+        bulletScript.speedX = this.shotSpeed;
+        bulletScript.speedY = shootingArea.getPosition().y;
+        bulletScript.player_pos = this.transform.position;
 
         Instantiate(bullet, bullet_pos_up, Quaternion.identity);
         Instantiate(bullet, bullet_pos_down, Quaternion.identity);
@@ -130,6 +149,37 @@ public class Player : MonoBehaviour {
       fire_delay_tmp += Time.deltaTime;
     }
     
+  }
+
+  void OnTriggerEnter2D(Collider2D collider){
+		if(collider.gameObject.tag == "Bullet"){
+			Bullet bullet = collider.gameObject.GetComponent<Bullet>();
+
+      this.applyDamage(bullet.damage);
+
+			Destroy(collider.gameObject);
+		}
+	}
+
+  void applyDamage(int damage) {
+    this.currentHealth -= damage;
+  }
+
+  void checkColor() {
+    Color oldColor = this.GetComponent<SpriteRenderer>().color;
+
+    float colorValue = (float) this.currentHealth * 1f / (float) this.maxHealth;
+
+    Debug.Log(colorValue);
+
+    Color newColor = new Color(
+      oldColor.r,
+      colorValue,
+      colorValue,
+      oldColor.a
+    );
+
+    this.GetComponent<SpriteRenderer>().color = newColor;
   }
 
 }

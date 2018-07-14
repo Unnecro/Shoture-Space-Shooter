@@ -169,9 +169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  speed_y: 5.921854
-  target_y: 0
-  player_pos: {x: 2.4390507, y: 4.2071686, z: 0}
+  speedX: -30
+  speedY: 8.097884
+  player_pos: {x: 8.516786, y: 8.097884, z: 0.099609375}
 --- !u!212 &21258446
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -209,7 +209,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b2c542c97d30cd8459978ef359788718, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}

@@ -1,13 +1,14 @@
 using UnityEngine;
 using System.Collections;
-using UnityEditor;
 
 public class Enemy : MonoBehaviour {
 
 	public EnemyArea enemyArea;
 
-  private int maxHealth = 1000;
-	private int health;
+	public GameObject bullet;
+
+  private int maxHealth = 100;
+	private int currentHealth;
   // private Vector3 original_scale;
 	// private float scale = 0.01f;
 
@@ -19,8 +20,9 @@ public class Enemy : MonoBehaviour {
   private float velocity_x = 0f;
 	private float velocity_y = 0f;
 
+	private float shotSpeed = 30f;
+
 	private Vector3 initialPosition;
-	private Vector3 initialScale;
 	private Quaternion initialRotation;
 
 	private GameObject originalGameObject;
@@ -34,7 +36,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-    health = maxHealth;
+    this.currentHealth = this.maxHealth;
 
     // original_scale = this.transform.localScale;
 		// this.transform.localScale = new Vector3(scale, scale, scale);
@@ -46,21 +48,25 @@ public class Enemy : MonoBehaviour {
 		this.originalGameObject = gameObject;
 
 		this.initialPosition = gameObject.transform.position;
-		this.initialScale    = gameObject.transform.localScale;
 		this.initialRotation = gameObject.transform.rotation;
   }
 
   // Update is called once per frame
   void Update() {
 
-		// Move object
-		this.move();
-
-		if(this.health <= 0){
+		if(this.currentHealth <= 0){
 			Instantiate(gameObject, this.initialPosition, this.initialRotation, this.originalGameObject.transform.parent);
 
 			Destroy(gameObject);
+			
+			return;
 		}
+
+		// Move object
+		this.move();
+		this.shoot();
+
+		this.checkColor();
 	}
 
 	void move() {
@@ -114,22 +120,57 @@ public class Enemy : MonoBehaviour {
 		if(collider.gameObject.tag == "Bullet"){
 			Bullet bullet = collider.gameObject.GetComponent<Bullet>();
 
-			Color oldColor = this.GetComponent<SpriteRenderer>().color;
-
-			float colorSubstraction = (float)bullet.damage / (float)this.maxHealth;
-
-			Color new_color = new Color(
-				oldColor.r,
-				oldColor.g - colorSubstraction,
-				oldColor.b - colorSubstraction,
-        oldColor.a
-			);
-
-			this.GetComponent<SpriteRenderer>().color = new_color;
-
-			this.health -= bullet.damage;
+      this.applyDamage(bullet.damage);
 
 			Destroy(collider.gameObject);
+		}
+	}
+
+  void applyDamage(int damage) {
+    this.currentHealth -= damage;
+  }
+
+  void checkColor() {
+    Color oldColor = this.GetComponent<SpriteRenderer>().color;
+
+    float colorValue = (float) this.currentHealth * 1f / (float) this.maxHealth;
+
+    Debug.Log(colorValue);
+
+    Color newColor = new Color(
+      oldColor.r,
+      colorValue,
+      colorValue,
+      oldColor.a
+    );
+
+    this.GetComponent<SpriteRenderer>().color = newColor;
+  }
+
+	private float fireDelay = 0.08f;
+	private float fireDelayTmp = 0.08f;
+
+	void shoot() {
+		if (this.fireDelayTmp >= this.fireDelay) {
+			Vector3 bulletPosition = new Vector3(
+				this.transform.position.x - 1f,
+				this.transform.position.y,
+				this.transform.position.z
+			);
+
+			Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+			bulletScript.player_pos = this.transform.position;
+			bulletScript.speedX     = -this.shotSpeed;
+			bulletScript.speedY     = this.transform.position.y;
+
+			bullet.GetComponent<SpriteRenderer>().flipX = true;
+
+			Instantiate(bullet, bulletPosition, Quaternion.identity);
+
+			fireDelayTmp = 0;
+		} else {
+			fireDelayTmp += Time.deltaTime;
 		}
 	}
 }

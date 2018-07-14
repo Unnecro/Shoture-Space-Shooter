@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyArea: {fileID: 0}
+  bullet: {fileID: 189844, guid: 2f7af015f0745c341995fe3b8844e19d, type: 2}
 --- !u!212 &21209800
 SpriteRenderer:
   m_ObjectHideFlags: 1
