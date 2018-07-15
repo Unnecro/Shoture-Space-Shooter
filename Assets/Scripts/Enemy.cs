@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour {
 
 	public GameObject bullet;
 
-  private int maxHealth = 100;
+  private int maxHealth = 1000;
 	private int currentHealth;
   // private Vector3 original_scale;
 	// private float scale = 0.01f;
@@ -49,6 +49,9 @@ public class Enemy : MonoBehaviour {
 
 		this.initialPosition = gameObject.transform.position;
 		this.initialRotation = gameObject.transform.rotation;
+
+		StartCoroutine(this.decideShootingState());
+
   }
 
   // Update is called once per frame
@@ -64,7 +67,7 @@ public class Enemy : MonoBehaviour {
 
 		// Move object
 		this.move();
-		this.shoot();
+		this.handleShooting();
 
 		this.checkColor();
 	}
@@ -117,7 +120,7 @@ public class Enemy : MonoBehaviour {
 		return new int[] { Random.Range(0, 5), Random.Range(0, 5) };
 	}
 	void OnTriggerEnter2D(Collider2D collider){
-		if(collider.gameObject.tag == "Bullet"){
+		if(collider.gameObject.tag == "Player bullet"){
 			Bullet bullet = collider.gameObject.GetComponent<Bullet>();
 
       this.applyDamage(bullet.damage);
@@ -135,8 +138,6 @@ public class Enemy : MonoBehaviour {
 
     float colorValue = (float) this.currentHealth * 1f / (float) this.maxHealth;
 
-    Debug.Log(colorValue);
-
     Color newColor = new Color(
       oldColor.r,
       colorValue,
@@ -147,30 +148,64 @@ public class Enemy : MonoBehaviour {
     this.GetComponent<SpriteRenderer>().color = newColor;
   }
 
-	private float fireDelay = 0.08f;
-	private float fireDelayTmp = 0.08f;
+	private float shotDelay = 0.08f;
+	private float shotDelayTmp = 0.08f;
+
+	private float shootingDurationMax = 6f;
+	private float shootingDurationMin = 1f;
+
+	private float notShootingDurationMax = 3f;
+	private float notShootingDurationMin = 1f;
+
+	// private float shootingDuration = 0f;
+	// private float notShootingDuration = 0f;
+
+	private bool isShooting = false;
+
+	IEnumerator decideShootingState() {
+		float seconds;
+		if(isShooting) {
+			seconds = Random.Range(this.shootingDurationMin, this.shootingDurationMax);			
+			yield return new WaitForSeconds(seconds);
+			this.isShooting = false;
+		} else {
+			seconds = Random.Range(this.notShootingDurationMin, this.notShootingDurationMax);
+			yield return new WaitForSeconds(seconds);
+			this.isShooting = true;
+		}
+
+		StartCoroutine(this.decideShootingState());
+	}
+
+	void handleShooting() {
+		if(isShooting) {
+			// this.shootingDuration -= Time.deltaTime;
+			if (this.shotDelayTmp >= this.shotDelay) {
+				this.shoot();
+				this.shotDelayTmp = 0;
+			} else {
+				this.shotDelayTmp += Time.deltaTime;
+			}
+		}
+		// } else {
+		// 	this.notShootingDuration -= Time.deltaTime;
+		// }
+	}
 
 	void shoot() {
-		if (this.fireDelayTmp >= this.fireDelay) {
-			Vector3 bulletPosition = new Vector3(
-				this.transform.position.x - 1f,
-				this.transform.position.y,
-				this.transform.position.z
-			);
+		Vector3 bulletPosition = new Vector3(
+			this.transform.position.x - 1f,
+			this.transform.position.y,
+			this.transform.position.z
+		);
 
-			Bullet bulletScript = bullet.GetComponent<Bullet>();
+		Bullet bulletScript = bullet.GetComponent<Bullet>();
 
-			bulletScript.player_pos = this.transform.position;
-			bulletScript.speedX     = -this.shotSpeed;
-			bulletScript.speedY     = this.transform.position.y;
+		bulletScript.player_pos = this.transform.position;
+		bulletScript.speedX     = -this.shotSpeed;
+		bulletScript.speedY     = this.transform.position.y;
 
-			bullet.GetComponent<SpriteRenderer>().flipX = true;
-
-			Instantiate(bullet, bulletPosition, Quaternion.identity);
-
-			fireDelayTmp = 0;
-		} else {
-			fireDelayTmp += Time.deltaTime;
-		}
+		Instantiate(bullet, bulletPosition, Quaternion.identity);
+		bullet.GetComponent<SpriteRenderer>().flipX = true;
 	}
 }

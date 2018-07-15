@@ -152,7 +152,7 @@ public class Player : MonoBehaviour {
   }
 
   void OnTriggerEnter2D(Collider2D collider){
-		if(collider.gameObject.tag == "Bullet"){
+		if(collider.gameObject.tag == "Enemy bullet"){
 			Bullet bullet = collider.gameObject.GetComponent<Bullet>();
 
       this.applyDamage(bullet.damage);
@@ -169,8 +169,6 @@ public class Player : MonoBehaviour {
     Color oldColor = this.GetComponent<SpriteRenderer>().color;
 
     float colorValue = (float) this.currentHealth * 1f / (float) this.maxHealth;
-
-    Debug.Log(colorValue);
 
     Color newColor = new Color(
       oldColor.r,
