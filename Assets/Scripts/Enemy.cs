@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour {
 
 	public GameObject bullet;
 
-  private int maxHealth = 1000;
+  private int maxHealth = 400;
 	private int currentHealth;
   // private Vector3 original_scale;
 	// private float scale = 0.01f;
